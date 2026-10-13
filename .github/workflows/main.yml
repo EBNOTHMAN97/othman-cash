@@ -18,10 +18,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check and extract source ZIP
+      - name: Extract app source ZIP
         run: |
           if [ ! -f othman-cash-source.zip ]; then
-            echo "ERROR: othman-cash-source.zip is missing from the repository root."
+            echo "Source ZIP not found in repository root"
             exit 1
           fi
           mkdir app-source
@@ -42,6 +42,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: Install missing React dependency
+        run: npm install react-is --save --legacy-peer-deps
 
       - name: Build web application
         run: npm run build
